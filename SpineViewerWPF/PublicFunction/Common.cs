@@ -85,7 +85,7 @@ public class Common
             App.globalValues.SelectSpineFile = "";
             return false;
         }
-          
+
     }
 
 
@@ -132,7 +132,7 @@ public class Common
 
     public static void RecodingEnd(float AnimationEnd)
     {
-        if(App.globalValues.ExportType == "Gif")
+        if (App.globalValues.ExportType == "Gif")
         {
             Thread t = new Thread(() =>
             {
@@ -188,7 +188,7 @@ public class Common
         {
             delay = (int)(time * 1000 * (App.globalValues.Speed / 30f) / lms.Count);
         }
-        
+
         if (saveFileDialog.FileName != "")
         {
 
@@ -251,12 +251,12 @@ public class Common
             fileName += $"_{App.globalValues.SelectSkin}";
 
         saveFileDialog.FileName = fileName;
-        if(saveFileDialog.ShowDialog() == false )
+        if (saveFileDialog.ShowDialog() == false)
         {
             return;
         }
 
-        string[] pngList = Directory.GetFiles($"{App.rootDir}\\Temp\\", "*.png",SearchOption.TopDirectoryOnly);
+        string[] pngList = Directory.GetFiles($"{App.rootDir}\\Temp\\", "*.png", SearchOption.TopDirectoryOnly);
 
 
         int delay = 0;
@@ -283,12 +283,12 @@ public class Common
                 img.Dispose();
             }
 
-           
+
             foreach (ImageFrame frame in gif.Frames)
             {
                 GifFrameMetadata meta = frame.Metadata.GetGifMetadata(); // Get or create if none.
-                
-                meta.FrameDelay = delay/10; // Set to 30/100 of a second.
+
+                meta.FrameDelay = delay / 10; // Set to 30/100 of a second.
                 meta.DisposalMethod = GifDisposalMethod.RestoreToBackground;
             }
 
@@ -297,7 +297,7 @@ public class Common
             gif.Frames.RemoveFrame(0);
             using (FileStream fs = File.Create(saveFileDialog.FileName))
             {
-                gif.SaveAsGif(fs,new GifEncoder() { ColorTableMode =  GifColorTableMode.Global});
+                gif.SaveAsGif(fs, new GifEncoder() { ColorTableMode = GifColorTableMode.Global });
             }
             gif.Dispose();
 
@@ -324,7 +324,7 @@ public class Common
 
         bitmapImage.StreamSource = stream;
         bitmapImage.EndInit();
-        bitmapImage.Freeze(); 
+        bitmapImage.Freeze();
         return bitmapImage;
 
     }
@@ -377,12 +377,12 @@ public class Common
                 fileName += $"_{App.globalValues.SelectSkin}";
 
             string exportDir = App.tempDirPath;
-            if(App.globalValues.ExportType == "Png Sequence")
+            if (App.globalValues.ExportType == "Png Sequence")
             {
                 exportDir = App.globalValues.ExportPath + "\\";
             }
-            using (FileStream fs = new FileStream($"{exportDir}{fileName}_{App.recordImageCount.ToString().PadLeft(7,'0')}.png"
-                ,FileMode.Create))
+            using (FileStream fs = new FileStream($"{exportDir}{fileName}_{App.recordImageCount.ToString().PadLeft(7, '0')}.png"
+                , FileMode.Create))
             {
                 texture.SaveAsPng(fs, _graphicsDevice.PresentationParameters.BackBufferWidth
                     , _graphicsDevice.PresentationParameters.BackBufferHeight);
@@ -429,7 +429,7 @@ public class Common
         string[] fileList = Directory.GetFiles($"{App.rootDir}\\Temp\\", "*.*", SearchOption.AllDirectories);
         if (fileList.Length > 0)
         {
-            foreach(string path in fileList)
+            foreach (string path in fileList)
             {
                 File.Delete(path);
             }
@@ -441,7 +441,7 @@ public class Common
         if (App.isNew)
         {
             App.globalValues.PosX = Convert.ToSingle(App.globalValues.FrameWidth / 2f);
-            App.globalValues.PosY = Convert.ToSingle((height + App.globalValues.FrameHeight) / 2f);
+            App.globalValues.PosY = Convert.ToSingle(App.globalValues.FrameHeight / 2f + (App.globalValues.FrameHeight - height) / 2f);
         }
     }
 
