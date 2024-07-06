@@ -41,10 +41,24 @@ namespace SpineViewerWPF
             this.Title = $"SpineViewerWPF      v{System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString()}";
             MasterMain = this;
             dispatcherTimer.Tick += dispatcherTimer_Tick;
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0,0,100);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
             dispatcherTimer.Start();
             LoadSetting();
-
+            var args = Environment.GetCommandLineArgs();
+            if (args.Length > 1)
+            {
+                App.globalValues.SelectSpineFile = args[1];
+                App.globalValues.SelectAtlasFile = args[1].Replace(".skel", ".atlas");
+                App.globalValues.FrameWidth = 1900;
+                App.globalValues.FrameHeight = 1024;
+                App.globalValues.Alpha = true;
+                App.globalValues.IsLoop = true;
+                App.globalValues.PreMultiplyAlpha = true;
+                App.canvasWidth = 1900;
+                App.canvasHeight = 1024;
+                App.isNew = true;
+                LoadPlayer("3.6.53");
+            }
         }
 
         private void LoadSetting()
@@ -400,7 +414,7 @@ namespace SpineViewerWPF
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-           if (App.graphicsDevice != null && App.graphicsDevice.GraphicsDeviceStatus == Microsoft.Xna.Framework.Graphics.GraphicsDeviceStatus.NotReset)
+            if (App.graphicsDevice != null && App.graphicsDevice.GraphicsDeviceStatus == Microsoft.Xna.Framework.Graphics.GraphicsDeviceStatus.NotReset)
             {
                 App.graphicsDevice.Reset();
             }

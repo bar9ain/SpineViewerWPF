@@ -94,8 +94,8 @@ namespace SpineViewerWPF.Views
 
             var transformGroup = (TransformGroup)Frame.RenderTransform;
             var tt = (TranslateTransform)transformGroup.Children.Where(x => x.GetType() == typeof(TranslateTransform)).FirstOrDefault();
-            tt.X = (float)((App.mainWidth ) / 2 - (App.canvasWidth / 2) -10);
-            tt.Y = (float)((App.mainHeight ) / 2 - (App.canvasHeight / 2)-40);
+            tt.X = 0;
+            tt.Y = 0;
 
             Frame.Children.Add(App.appXC);
 
